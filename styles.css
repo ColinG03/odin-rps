@@ -1,0 +1,10 @@
+#restart{
+    visibility: hidden;
+}
+
+.r-button,
+.p-button,
+.s-button{
+    visibility: visible;
+}
+

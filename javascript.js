@@ -5,6 +5,31 @@ Use console.log() to check if this is outputting the correct output
 playerSelection() - get input from player
 determine who wins and print it
 */
+let playerScore = 0;
+let computerScore = 0;
+let winner = ''
+
+function playRound(playerSel, compSel){
+    if(playerSel === compSel){
+        winner = 'tie';
+    }
+
+    else if(playerSel === 'rock' && compSel === 'scissors' ||
+            playerSel === 'paper' && compSel === 'rock' ||
+            playerSel === 'scissors' && compSel === 'paper'){
+        playerScore++;
+        winner = 'player';
+    }
+
+    else{
+        winner = 'computer';
+        computerScore++;
+    }
+    updateScore(winner);
+    updateScoreMessage(winner, playerSel, compSel);
+
+}
+
 
 function getComputerChoice(){
     let comp_choice = Math.random() * 3;
@@ -28,83 +53,83 @@ function getComputerChoice(){
     return res;
 }
 
-function playRound(playerSel, computerSel){
-    playerSel = playerSel.toLowerCase();
-    
-    if(!playerSel){
-        alert("please enter valid input, options are rock, paper, or scissors")
-        return "replay"
-    }
-    if(playerSel === computerSel){
-        return "replay";
-    }
 
-    console.log(playerSel + " " + computerSel);
 
-    if(playerSel === "rock"){
-        if(computerSel === "scissors"){
-            return "win";
-        }else if(computerSel === "paper"){
-            return "lose";
-        }
-    }else if(playerSel === "paper"){
-        if(computerSel === "scissors"){
-            return "lose";
-        }else if(computerSel === "rock"){
-            return "win";
-        }
-    }else if(playerSel === "scissors"){
-        if(computerSel === "paper"){
-            return "win";
-        }else if(computerSel === "rock"){
-            return "lose";
-        }
-    }else{
-        alert("please enter valid input next time");
-        return "replay";
-    }
-
-}
-
-// button.addEventListener(click)
 const para = document.querySelector("p");
+const rockBtn = document.querySelector('#r-button');
+const paperBtn = document.querySelector('#p-button');
+const scissorsBtn = document.querySelector('#s-button');
+const compScore = document.querySelector('#comp-score');
+const userScore = document.querySelector('#user-score');
+const h1 = document.querySelector('h1');
+const restart = document.querySelector('#restart');
+const message = document.querySelector('#score-message');
 
-function game(){
-    
-    let playerWins = 0;
-    let compWins = 0;
-    let outcome = "";
+rockBtn.addEventListener('click', () => handleClick('rock'));
+paperBtn.addEventListener('click', () => handleClick('paper'));
+scissorsBtn.addEventListener('click', () => handleClick('scissors'));
+restart.addEventListener('click', () => restartGame());
 
-    while(playerWins < 3 && compWins < 3){
-        let playerSel = prompt("enter input")
-        
-        outcome = playRound(playerSel, getComputerChoice())
-        if(outcome === "win"){
-            playerWins += 1;
-        }else if(outcome === "lose"){
-            compWins += 1;
-        }else{
-            continue;
-        }
-        
-        
-    }
-    let msg = "";
-    if(playerWins === 3){
-        msg = "Congratulations! You beat the computer with a score of " + playerWins.toString() + " to " + compWins.toString();
-        console.log(msg);
-        para.textContent = msg;
 
-    }else{
-        msg = "Sorry, you lost to the computer with a score of " + playerWins.toString() + " to " + compWins.toString();
-        console.log(msg);
-        para.textContent = msg;
-
-    }
-    
+function handleClick(playerSel){
+    const compSel = getComputerChoice();
+    playRound(playerSel, compSel);
 }
 
-game();
+function updateScore(winner){
+    switch(winner){
+        case 'computer':
+            compScore.textContent = `Computer: ${computerScore}`;
+            if(computerScore === 3){
+                endGame('computer');
+            }
+            break;
+        case 'player':
+            userScore.textContent = `Player: ${playerScore}`;
+            if(playerScore === 3){
+                endGame('player');
+            }
+            break;
+        default:
+            break;
+
+
+    }
+}
+
+function updateScoreMessage(winner, playerSel, compSel){
+    if(winner === 'player'){
+        message.textContent = `Your ${playerSel} beats the computer's ${compSel}!`;
+    }else if(winner === 'computer'){
+        message.textContent = `Your ${playerSel} loses to the computer's ${compSel}!`;
+    }else{
+        message.textContent = `You both chose ${playerSel}. It's a tie!`;
+    }
+}
+
+
+
+
+function endGame(winner){
+    if(winner === 'player'){
+        winner = 'You';
+    }else if(winner === 'computer'){
+        winner = 'The computer';
+    }
+    h1.textContent = `${winner} has won the game!`;
+    restart.style.visibility = 'visible';
+    rockBtn.style.visibility = 'hidden';
+    paperBtn.style.visibility = 'hidden';
+    scissorsBtn.style.visibility = 'hidden';
+
+}
+
+function restartGame(){
+    location.reload();
+}
+
+
+
 
 
 

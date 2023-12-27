@@ -4,17 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Users/colin.gould/Desktop/code/odin-rps/styles.css">
     <title>Rock-Paper-Scissors</title>
     
 </head>
 <body>
     
-    <h1>Enter rock, paper or scissors</h1>
-    <label for="user-choice">Your choice:</label>
-    <input type="text" id="user-choice">
-    <button id="play-button">Play!</button>
+    <h1>Rock, paper or scissors?</h1>
+    
+    <button id="r-button">Rock</button>
+    <button id="p-button">Paper</button>
+    <button id="s-button">Scissors</button>
 
-    <p></p>
+    <p id="score-message">
+        What will you choose?
+    </p>
+
+    <p>
+        <span id="user-score">
+            Player:
+        </span>
+        <span id="comp-score">
+            Computer:
+        </span>
+    
+    </p>
+
+    <button id="restart">Restart</button>
+
 
 
 
